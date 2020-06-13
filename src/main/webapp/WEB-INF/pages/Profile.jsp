@@ -7,6 +7,41 @@
 <head>
 <title>Profile</title>
 <style type="text/css">
+ ul{
+        padding: 0;
+        list-style: none;
+        background: rgba(0, 0, 0, 0.7);
+    }
+    ul li{
+        display: inline-block;
+        position: relative;
+        line-height: 21px;
+        text-align: left;
+    }
+    ul li a{
+        display: block;
+        padding: 8px 25px;
+        color: #333;
+        text-decoration: none;
+    }
+    ul li a:hover{
+        color: #fff;
+        background: #939393;
+    }
+    ul li ul.dropdown{
+        min-width: 100%; /* Set width of the dropdown */
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+    }
+    ul li:hover ul.dropdown{
+        display: block; /* Display the dropdown */
+    }
+    ul li ul.dropdown li{
+        display: block;
+    }
 .pagination {
   display: inline-block;
 }
@@ -71,6 +106,20 @@ body {
 </head>
 <body>
 	<header style="height: 30px; background-color: darkblue;"> </header>
+	<br>
+		<ul>
+        <li>
+        <li>
+            <a href="#" style=color:white>Menu &#9662;</a>
+            <ul class="dropdown">
+                <li><a href="auth#" style=color:white>Home</a></li>
+                <li><a href="profile" style=color:white>Profile</a></li>
+                <li><a href="#" style=color:white>About us</a></li>
+                <li><a href="auth" style=color:white>Logout</a></li>
+            </ul>
+        </li>
+        <li><a href="#" style=color:white>Contact</a></li>
+    </ul>
 	<div class="container">
 		<br /> <img src="imag/girly.gif" style="height: 150px;"
 			class="img-thumbnail"> <img src="imag/Profile.jpg"
@@ -107,7 +156,12 @@ body {
     %>
 				<tr>
 					<td><%=dto.getId() %></td>
-					<td><%=dto.getUsername() %></td>
+					
+					<td><%=dto.getUsername() %>
+					<br>
+					<br>
+					</a> &nbsp; &nbsp; &nbsp;<a href="emailProfile?email=<%=dto.getEmail() %>"><img 
+					src="imag/email.png" style="height: 24px"></a></td>
 					<td><%=dto.getName() %></td>
 					<td><%=dto.getEmail() %></td>
 					<td><%=dto.getGender() %></td>
@@ -126,9 +180,9 @@ body {
 				<%} %>
 			</tbody>
 		</table>
-		<a href="auth">
+<!-- 		<a href="auth">
 			<button type="button" class="btn btn-primary">Back</button>
-		</a>
+		</a> -->
 	</div>
 </body>
 </html>

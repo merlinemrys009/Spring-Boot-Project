@@ -1,6 +1,7 @@
 package rab3.controller.dto;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,7 @@ public class ProfileDTO {
 	private MultipartFile photo;
 	private Timestamp doe;
 	private String role;
+	private byte[] hphoto;
 
 	public String getRole() {
 		return role;
@@ -95,11 +97,21 @@ public class ProfileDTO {
 		this.doe = doe;
 	}
 
+	public byte[] getHphoto() {
+		return hphoto;
+	}
+
+	public void setHphoto(byte[] hphoto) {
+		this.hphoto = hphoto;
+	}
+
 	@Override
 	public String toString() {
 		return "ProfileDTO [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name
 				+ ", email=" + email + ", gender=" + gender + ", photo=" + photo + ", doe=" + doe + ", role=" + role
-				+ "]";
+				+ ", hphoto=" + Arrays.toString(hphoto) + "]";
 	}
+
+	
 
 }

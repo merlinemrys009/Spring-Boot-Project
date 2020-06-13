@@ -40,8 +40,6 @@ body {
        <input type="hidden"  name="id"  value="${p.id}">
       <label style=color:white><b>UserName</b></label>
       <input type="text" name="username"  class="form-control"   value="${p.username}">
-      <label style=color:white><b>Password</b></label>
-      <input type="password" name="username"  class="form-control"   value="${p.password}" readonly>
         <label style=color:white><b>Name</b></label>
       <input type="text" name="name"  class="form-control" value="${p.name}">
       <label style=color:white><b>Email</b></label>

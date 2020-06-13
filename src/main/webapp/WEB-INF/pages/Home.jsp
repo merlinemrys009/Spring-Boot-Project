@@ -5,6 +5,41 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <style type="text/css">
+      ul{
+        padding: 0;
+        list-style: none;
+        background: rgba(0, 0, 0, 0.7);
+    }
+    ul li{
+        display: inline-block;
+        position: relative;
+        line-height: 21px;
+        text-align: left;
+    }
+    ul li a{
+        display: block;
+        padding: 8px 25px;
+        color: #333;
+        text-decoration: none;
+    }
+    ul li a:hover{
+        color: #fff;
+        background: #939393;
+    }
+    ul li ul.dropdown{
+        min-width: 100%; /* Set width of the dropdown */
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+    }
+    ul li:hover ul.dropdown{
+        display: block; /* Display the dropdown */
+    }
+    ul li ul.dropdown li{
+        display: block;
+    }
 body {
 	background-image: url(imag/lights.gif);
 	background-size: cover;
@@ -13,7 +48,7 @@ body {
 .container {
 	width: 50px;
 	height: 560px;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.7);
 	margin-top: 40px;
 	border-radius: 15px;
 }
@@ -33,8 +68,22 @@ body {
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<header style="height: 50px; background-color: #2196f3; color: white;">
+	<header style="height: 100px; background-color: #2196f3; color: white;">
 		<span style="font-size: 18px; font-weight: bold;">Welcome Home</span>
+		<br>
+		<ul>
+        <li>
+        <li>
+            <a href="#" style=color:white>Menu &#9662;</a>
+            <ul class="dropdown">
+                <li><a href="auth#" style=color:white>Home</a></li>
+                <li><a href="profile" style=color:white>Profile</a></li>
+                <li><a href="#" style=color:white>About us</a></li>
+                <li><a href="auth" style=color:white>Logout</a></li>
+            </ul>
+        </li>
+        <li><a href="#" style=color:white>Contact</a></li>
+    </ul>
 	</header>
 	<div class="container">
 		<br /> <img src="${something.image}" style="height: 150px;"
@@ -58,9 +107,6 @@ body {
 				</h4>
 				
 		<hr />
-		<a href="auth">
-			<button type="button" class="btn btn-primary">Back</button>
-		</a>
 		</div>
 </body>
 </html>

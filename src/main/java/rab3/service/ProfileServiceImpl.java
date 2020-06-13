@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,10 @@ import org.springframework.stereotype.Service;
 import rab3.controller.dto.ProfileDTO;
 import rab3.dao.ProfileDaoRep;
 import rab3.dao.entity.ProfileEntity;
+import rab3.springboot.utils.Utils;
 
 @Service
+@Transactional
 public class ProfileServiceImpl implements ProfileService {
 
 	@Autowired
@@ -70,8 +74,20 @@ public class ProfileServiceImpl implements ProfileService {
 	public String updateProfile(ProfileDTO profileDTO) {
 		ProfileEntity profileEntity = new ProfileEntity();
 		BeanUtils.copyProperties(profileDTO, profileEntity);
-		profileDao.save(profileEntity);
+		try {
+			if (profileDTO.getPhoto() != null
+					&& profileDTO.getPhoto().getBytes() != null & profileDTO.getPhoto().getBytes().length > 5) {
+				profileDTO.setHphoto(profileDTO.getPhoto().getBytes());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		
+		ProfileEntity dbProfileEntity = profileDao.findById(profileDTO.getId()).get();
+		Utils.copyNonNullProperties(profileEntity, dbProfileEntity);
 		return "done";
+
 	}
 
 	@Override
