@@ -4,16 +4,25 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import rab3.SpringBootStarter;
 import rab3.controller.dto.ProfileDTO;
+import rab3.controller.mail.EmailService;
+import rab3.controller.mail.Mail;
 import rab3.dao.ProfileDaoRep;
 import rab3.dao.entity.ProfileEntity;
 import rab3.springboot.utils.Utils;
@@ -24,6 +33,8 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Autowired
 	private ProfileDaoRep profileDao;
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public ProfileDTO auth(String username, String password) {
@@ -83,7 +94,7 @@ public class ProfileServiceImpl implements ProfileService {
 			e.printStackTrace();
 
 		}
-		
+
 		ProfileEntity dbProfileEntity = profileDao.findById(profileDTO.getId()).get();
 		Utils.copyNonNullProperties(profileEntity, dbProfileEntity);
 		return "done";
@@ -109,8 +120,9 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
-	public List<ProfileDTO> findProfile() {
-		List<ProfileEntity> listOfEntity = profileDao.findAll();
+	public List<ProfileDTO> findProfile(int ppageid, int pageSize) {
+		Pageable paging = PageRequest.of(ppageid, pageSize);
+		Page<ProfileEntity> listOfEntity = profileDao.findAll(paging);
 		List<ProfileDTO> profileDTO = new ArrayList<>();
 		for (ProfileEntity peEntity : listOfEntity) {
 			ProfileDTO profileDTOs = new ProfileDTO();
@@ -121,4 +133,28 @@ public class ProfileServiceImpl implements ProfileService {
 
 	}
 
+	@Override
+	public void sendSimpleMessage(Mail mail) {
+		
+		try {
+			//Logger log = LoggerFactory.getLogger(SpringBootStarter.class);
+			//log.info("Please Email me if you get this message");
+			mail.setFrom("no-reply@youtube.com");
+			mail.setTo("joker3drt@gmail.com");
+			mail.setContent("Hello We Appologies for Inconvience");
+			mail.setSubject("Please Email me if you get this message");
+
+			Map<String, String> model = new HashMap<>();
+			model.put("name", "James");
+			model.put("location", "Unknown");
+			model.put("signature", "http://James.com");
+			//mail.setModel(model);
+
+			emailService.sendSimpleMessage(mail);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }

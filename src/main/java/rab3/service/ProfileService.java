@@ -3,6 +3,7 @@ package rab3.service;
 import java.util.List;
 
 import rab3.controller.dto.ProfileDTO;
+import rab3.controller.mail.Mail;
 import rab3.dao.entity.ProfileEntity;
 
 public interface ProfileService {
@@ -19,12 +20,17 @@ public interface ProfileService {
 
 	ProfileDTO auth(String username, String password);
 
-	List<ProfileDTO> findProfile();
+//	List<ProfileDTO> findProfile();
 
 	String updateProfile(ProfileDTO profileDTO);
 
 	Long findCounts();
 
 	void deleteProfileById(int id);
+
+	List<ProfileDTO> findProfile(int ppageid, int pageSize);
+
+	void sendSimpleMessage(Mail mail);
+
 
 }

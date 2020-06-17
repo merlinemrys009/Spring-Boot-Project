@@ -5,15 +5,9 @@ public class Mail {
 	private String from;
 	private String to;
 	private String subject;
-	private String content;
-	
-	public Mail(String from, String to, String subject, String content) {
-		super();
-		this.from = from;
-		this.to = to;
-		this.subject = subject;
-		this.content = content;
-	}
+	private String content;	
+
+
 
 	public String getFrom() {
 		return from;
@@ -49,9 +43,10 @@ public class Mail {
 
 	@Override
 	public String toString() {
-		return "Mail [from=" + from + ", to=" + to + ", subject=" + subject + ", content=" + content + "]";
+		return "Mail [from=" + from + ", to=" + to + ", subject=" + subject + ", content=" + content +  "]";
 	}
 
+	
 	
 	
 

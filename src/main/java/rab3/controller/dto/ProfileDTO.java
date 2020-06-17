@@ -5,6 +5,10 @@ import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(value=Include.NON_NULL)
 public class ProfileDTO {
 	private int id;
 	private String username;
@@ -15,6 +19,7 @@ public class ProfileDTO {
 	private MultipartFile photo;
 	private Timestamp doe;
 	private String role;
+	@JsonIgnore
 	private byte[] hphoto;
 
 	public String getRole() {
