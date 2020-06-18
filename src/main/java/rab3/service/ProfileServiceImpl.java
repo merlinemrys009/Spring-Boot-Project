@@ -11,17 +11,14 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import rab3.SpringBootStarter;
 import rab3.controller.dto.ProfileDTO;
-import rab3.controller.mail.EmailService;
+//import rab3.controller.mail.EmailService;
 import rab3.controller.mail.Mail;
 import rab3.dao.ProfileDaoRep;
 import rab3.dao.entity.ProfileEntity;
@@ -33,8 +30,8 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Autowired
 	private ProfileDaoRep profileDao;
-	@Autowired
-	private EmailService emailService;
+//	@Autowired
+//	private EmailService emailService;
 
 	@Override
 	public ProfileDTO auth(String username, String password) {
@@ -54,9 +51,15 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
-	public String findPassword(String email) {
-		return profileDao.findByEmail(email).get().getPassword();
-	}
+	public Optional<ProfileDTO> findPassword(String email) {
+		Optional<ProfileEntity> optional=profileDao.findByEmail(email);
+		ProfileDTO dto=null;
+		if(optional.isPresent()) {
+			dto=new ProfileDTO();
+			BeanUtils.copyProperties(optional.get(), dto);
+	   }
+		return Optional.ofNullable(dto);
+	}	
 
 	@Override
 	public String persist(ProfileDTO profileDTO) {
@@ -150,7 +153,7 @@ public class ProfileServiceImpl implements ProfileService {
 			model.put("signature", "http://James.com");
 			//mail.setModel(model);
 
-			emailService.sendSimpleMessage(mail);
+//			emailService.sendSimpleMessage(mail);
 
 		} catch (Exception e) {
 			e.printStackTrace();

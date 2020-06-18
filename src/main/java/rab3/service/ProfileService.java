@@ -1,6 +1,7 @@
 package rab3.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import rab3.controller.dto.ProfileDTO;
 import rab3.controller.mail.Mail;
@@ -8,7 +9,7 @@ import rab3.dao.entity.ProfileEntity;
 
 public interface ProfileService {
 
-	String findPassword(String email);
+	Optional<ProfileDTO> findPassword(String email);
 
 	ProfileDTO findProfileById(int id);
 

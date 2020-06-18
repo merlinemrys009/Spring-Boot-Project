@@ -26,13 +26,13 @@ public class AuthController {
 	@PostMapping("/auth")
 	public String auth(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
 		ProfileDTO profileDTO = profileService.auth(username, password);
-		System.out.println("profile dto" + profileDTO);
 		if (profileDTO != null) {
 			session.setAttribute("proS", profileDTO);
 			model.addAttribute("p", profileDTO);
+			model.addAttribute("msg","You have Login Successfully");
 			return "Home";
-		} else {
-			model.addAttribute("msg", "Either Username or Password is Incorrect");
+		} else  {
+			model.addAttribute("msg","Either Username or Password is Incorrect");
 			return "Login";
 		}
 	}

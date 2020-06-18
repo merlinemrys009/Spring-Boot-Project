@@ -1,6 +1,7 @@
 package rab3.rest.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rab3.controller.dto.ApplicationVO;
@@ -22,6 +24,26 @@ public class ProfileRestController {
 
 	@Autowired
 	private ProfileService profileService;
+	
+	@GetMapping("password/email")
+	public ApplicationVO findPasswordEmail(@RequestParam("email") String email ) {
+		Optional<ProfileDTO> optional=profileService.findPassword(email);
+		  ApplicationVO applicationVO=new ApplicationVO();
+		  if(optional.isPresent()) {
+			  ProfileDTO profileDTO=optional.get();
+			  String salutation="Mr.";
+			  if(!profileDTO.getGender().equalsIgnoreCase("Male")) {
+				  salutation="Ms";
+			  }
+			  applicationVO.setCode("1");
+			  applicationVO.setMessage("Hello "+salutation+" "+profileDTO.getName()+" your password is : "+profileDTO.getPassword());
+		  }else {
+			  applicationVO.setCode("0");
+			  applicationVO.setMessage("Sorry , Email doesn't exist");
+		  }
+		  applicationVO.setEmail(email);
+		  return applicationVO;
+	}
 
 	
 	@PostMapping("/profile")

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import rab3.controller.dto.ProfileDTO;
-import rab3.controller.mail.EmailService;
+//import rab3.controller.mail.EmailService;
 import rab3.controller.mail.Mail;
 import rab3.dao.entity.ProfileEntity;
 import rab3.service.ProfileService;
@@ -26,8 +26,8 @@ public class ProfileController {
 	@Autowired
 	private ProfileService profileService;
 
-	@Autowired
-	EmailService emailService;
+//	@Autowired
+//	EmailService emailService;
 
 	@GetMapping("/profile")
 	public String showPaginatedData(@RequestParam(required = false, defaultValue = "1") String pageid, Model model) {
@@ -85,7 +85,7 @@ public class ProfileController {
 
 	@PostMapping("/ForgotPassword")
 	public String forgetPasswordPage(@RequestParam String email, Model model) {
-		String passsoword = profileService.findPassword(email);
+		String passsoword = profileService.findPassword(email).get().getPassword();
 		if (passsoword != null) {
 			model.addAttribute("p", "Your Password  =  " + passsoword);
 		} else {
