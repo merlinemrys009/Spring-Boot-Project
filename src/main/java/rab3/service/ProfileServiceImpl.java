@@ -37,7 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
 	public ProfileDTO auth(String username, String password) {
 		Optional<ProfileEntity> result = profileDao.findByUsernameAndPassword(username, password);
 		ProfileDTO profileDTO = null;
-		if (result != null) {
+		if (result.isPresent()) {
 			profileDTO = new ProfileDTO();
 			BeanUtils.copyProperties(result.get(), profileDTO);
 		}

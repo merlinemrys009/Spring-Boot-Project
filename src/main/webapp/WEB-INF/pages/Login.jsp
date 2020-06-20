@@ -72,9 +72,9 @@ body {
         	   }
         	   var   passwordObj=document.getElementById("password");
                var  passwordText=passwordObj.value;
-               if(passwordText.length==0){
+               if(passwordText.length<=4){
             	   passwordObj.focus();
-                     document.getElementById("passwordError").innerHTML="Password can't be blank, must be at least 6 characters long";
+                     document.getElementById("passwordError").innerHTML="Password can't be blank, must be at least 4 characters long";
                      return;
                }
                //THis submitting the form
@@ -91,7 +91,7 @@ body {
 	<div class="container" style="width: 25%">
 		<br /> <img src="imag/user.png" style="height: 100px" class="user">
 		<hr />
-		<span style="font-size: 18px; color: red;" id="genMessage">${msg}</span>
+		<span style="font-size: 12px; color: red;" id="genMessage">${msg}</span>
 		<br />
 		<div>
 			<form name="authForm" action="auth" method="POST">

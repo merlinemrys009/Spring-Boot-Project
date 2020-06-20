@@ -16,9 +16,9 @@ body {
 	transform: translate(-50%, -50%);
 	width: 350px;
 	height: 1050px;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.7);
 	box-sizing: border-box;
-	margin-top: 40px;
+	margin-top: 200px;
 	border-radius: 15px;
 }
 </style>
@@ -53,7 +53,7 @@ body {
          var  usernameText=usernameObj.value;
          if(usernameText.length==0){
         	 usernameObj.focus();
-               document.getElementById("usernameError").innerHTML="Username can't be blank, input your email";
+               document.getElementById("usernameError").innerHTML="Username can't be blank";
                return;
          }
          var   passwordObj=document.getElementById("password");
@@ -95,6 +95,50 @@ body {
 	     document.registerForm.submit();
 	 }  
 	</script>
+
+<script>
+   
+      function polulateSalutations(){
+    	       var  gender=$("#gender").val();
+    	       if(gender.length==0){
+    	    	   $("#m_message").html("Please select a gender!!!");
+    	    	   $("#m_message").focus();
+    	    	   return;
+    	       }
+    	       $("#m_message").html("");
+    	       
+    	       var promise=fetch("api2/profiles/salutations/"+gender);
+    	         promise.then((resp) => resp.json()) // Transform the data into json
+    	        .then(function(data) { //JavaScript from JSON
+    	             console.log(data);  
+    	             $('#salutation'). empty();
+    	             for (index = 0; index < data.length; index++) { 
+    	                 $('#salutation').append( $('<option></option>').val(data[index]).html(data[index])  ); 
+    	             } 
+    	        });
+    	       
+      }
+   
+      $(document).ready(function(){
+    	            //Make ajax call
+    	  //This is AJAX call to communicate with rest API or controller
+    	  http://localhost:8080/
+          var promise=fetch("api2/profiles/choices");
+         promise.then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) { //JavaScript from JSON
+             console.log(data);  //data={"email":"93939"}
+             $('#gender').append( $('<option></option>').val('').html('Select') ); 
+             for (index = 0; index < data.length; index++) {  
+                 $('#gender').append( $('<option></option>').val(data[index]).html(data[index])  ); 
+             } 
+             
+        });
+    	        	  
+    	  
+    	  
+      });
+   
+   </script>
 </head>
 <body>
 	<header style="height: 30px, background-color: #2196f3; color: white;">
@@ -106,7 +150,8 @@ body {
 			<br /> <img src="imag/welcome.png" style="height: 200px">
 		</div>
 		<hr />
-		<span style="font-size: 18px; color: red;">${param.msg}</span> <br />
+		<span style="font-size: 18px; color: red;" id="m_message">${param.msg}</span>
+		<br />
 
 		<h1 style="font-size: 22px; color: white">Total Registration :
 			${param.pros}</h1>
@@ -134,13 +179,20 @@ body {
 					name="email" id="email" placeholder="Enter Valid Email Address"
 					class="form-control" style="width: 50%" onkeyup="clearText();">
 				<span style="color: red; font-size: 12px;" id="emailError"></span><br>
-				<label style="color: white">Gender</label> <select name="gender"
-					id="gender" class="form-control" style="width: 25%;"
-					onkeyup="clearText();">
-					<option>Select</option>
-					<option>Male</option>
-					<option>Female</option>
-				</select><br>
+				<label style="color: white">Gender</label> 
+				<div style="width: 100%">
+					<table style="width: 50%">
+						<tr>
+							<td style="width:25%;"><select name="gender" id="gender"
+								class="form-control" onchange="polulateSalutations();">
+							</select></td>
+							<td style="width: 25%;"><select name="salutation"
+								id="salutation" class="form-control">
+									<option value="">Select</option>
+							</select></td>
+						</tr>
+					</table>
+				</div>
 				<label style="color: white">Photo</label> <input type="file"
 					name="photo" id="photo" placeholder="Place Profile Photo's url"
 					class="form-control" style="width: 50%" onkeyup="clearText();">

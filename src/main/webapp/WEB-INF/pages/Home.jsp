@@ -45,10 +45,15 @@ body {
 }
 
 .container {
-	width: 50px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 350px;
 	height: 560px;
 	background-color: rgba(0, 0, 0, 0.7);
-	margin-top: 40px;
+	box-sizing: border-box;
+	margin-top: 150px;
 	border-radius: 15px;
 }
 </style>

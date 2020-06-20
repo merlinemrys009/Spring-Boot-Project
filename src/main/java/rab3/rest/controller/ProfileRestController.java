@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import rab3.controller.dto.AppNameId;
 import rab3.controller.dto.ApplicationVO;
 import rab3.controller.dto.ProfileDTO;
 import rab3.service.ProfileService;
+import rab3.service.SalutationChoiceService;
 
 @RestController
 @RequestMapping("/api2")
@@ -24,6 +26,29 @@ public class ProfileRestController {
 
 	@Autowired
 	private ProfileService profileService;
+	
+	@Autowired
+	private SalutationChoiceService salutationChoiceService;
+
+
+	@GetMapping("/profiles/choices")
+	public List<String> profilesChoices() {
+		return salutationChoiceService.findDifferentChoices();
+	}
+
+	@GetMapping("/profiles/salutations/{choice}")
+	public List<String> profilesChoices(@PathVariable String choice) {
+		return salutationChoiceService.findSalutationsByChoice(choice);
+	}
+	
+	@DeleteMapping("/delprofile")
+	public ApplicationVO deleteProfileJsonInpit(@RequestBody AppNameId appNameId) {
+		profileService.deleteProfileById(appNameId.getId());
+		ApplicationVO applicationVO=new ApplicationVO();
+		applicationVO.setCode("O8182");
+		applicationVO.setMessage("profile is deleted successfully for id = "+appNameId.getId()+" and appname = "+appNameId.getAppname());
+		return applicationVO;
+	}
 	
 	@GetMapping("password/email")
 	public ApplicationVO findPasswordEmail(@RequestParam("email") String email ) {
@@ -51,7 +76,7 @@ public class ProfileRestController {
 		profileService.persist(profileDTO);
 		ApplicationVO applicationVO=new ApplicationVO();
 		applicationVO.setCode("O8182");
-		applicationVO.setMessage("profile is created ");
+		applicationVO.setMessage("profile is created successfully ");
 		/*{
 			"code":"O8182",
 			"message":profile is created""
